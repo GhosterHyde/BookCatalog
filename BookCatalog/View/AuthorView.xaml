@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="BookCatalog.View.AuthorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BookCatalog.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type ValidationError}">
+                <TextBlock 
+                    FontStyle="Italic"
+                    Foreground="Red"
+                    HorizontalAlignment="Right"
+                    Margin="0,1,10,0"
+                    Text="{Binding Path=ErrorContent}" />
+            </DataTemplate>
+        </Grid.Resources>
+        <StackPanel Name="Header" Grid.Row="0">
+            <Label Content="Автор"
+                   FontSize="20"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"/>
+            <Separator/>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Name="MainSb">
+                <StackPanel Margin="10, 0">
+                    <TextBlock Text="Фамилия" />
+                    <TextBox x:Name="Surname" 
+                             Margin="0, 10" 
+                             Text="{Binding Path=Surname, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                             Height="25" />
+                    <ContentPresenter Content="{Binding ElementName=Surname, Path=(Validation.Errors).CurrentItem}"/>
+                    <TextBlock Text="Имя" />
+                    <TextBox x:Name="Name" 
+                             Margin="0, 10" 
+                             Text="{Binding Path=Name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                             Height="25" />
+                    <ContentPresenter Content="{Binding ElementName=Name, Path=(Validation.Errors).CurrentItem}"/>
+                    <TextBlock Text="Отчество" />
+                    <TextBox x:Name="SecondName" 
+                             Margin="0, 10" 
+                             Text="{Binding Path=SecondName, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                             Height="25" />
+                    <ContentPresenter Content="{Binding ElementName=SecondName, Path=(Validation.Errors).CurrentItem}"/>
+                    <Button x:Name="SaveAuthor" 
+                            Command="{Binding Path=SaveAuthor}" 
+                            Content="Сохранить"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

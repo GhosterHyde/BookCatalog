@@ -1,0 +1,123 @@
+﻿<UserControl x:Class="BookCatalog.View.BookView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"  
+             Name="Workspace"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type ValidationError}">
+                <TextBlock 
+                    FontStyle="Italic"
+                    Foreground="Red"
+                    HorizontalAlignment="Right"
+                    Margin="0,1,10,0"
+                    Text="{Binding Path=ErrorContent}" />
+            </DataTemplate>
+        </Grid.Resources>
+        <StackPanel Name="Header" Grid.Row="0">
+            <Label Content="Книга"
+                   FontSize="20"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"/>
+            <Separator/>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Name="MainSb">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="200"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="10, 0">
+                            <TextBlock Text="Название" />
+                            <TextBox x:Name="Name" 
+                                     Margin="0, 10" 
+                                     Text="{Binding Path=Name, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                                     Height="25" />
+                            <ContentPresenter Content="{Binding ElementName=Name, Path=(Validation.Errors).CurrentItem}"/>
+                            <Grid Margin="0, 10">
+                                <Grid x:Name="Authors">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="Авторы" />
+                                        <ListBox x:Name="BookAuthors"
+                                                 ItemsSource="{Binding Path=Authors}"
+                                                 MaxHeight="150"
+                                                 Margin="0, 5, 5,0"
+                                                 SelectedItem="{Binding Path=DeletableAuthor}"/>
+                                        <Button Content="Удалить"
+                                                Margin="0, 5, 5, 0"
+                                                Command="{Binding Path=DeleteAuthor}"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Margin="5, 0, 0, 0" Name="addAuthor">
+                                        <TextBlock Text="Добавить автора" />
+                                        <ComboBox x:Name="AllAuthors"
+                                                  Margin="0, 5, 0,0"
+                                                  ItemsSource="{Binding Path=AllAuthors}"
+                                                  SelectedItem="{Binding Path=AddableAuthor}"/>
+                                        <Button Content="Добавить"
+                                                Margin="0, 5"
+                                                Command="{Binding Path=AddAuthor}"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                            <TextBlock Text="Год издания" />
+                            <TextBox x:Name="Year" 
+                                     Margin="0, 10" 
+                                     Text="{Binding Path=Year, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                                     Height="25">
+                            </TextBox>
+                            <ContentPresenter Content="{Binding ElementName=Year, Path=(Validation.Errors).CurrentItem}"/>
+
+                            <TextBlock Text="ISBN" />
+                            <TextBox x:Name="Isbn" 
+                                     Margin="0, 10" 
+                                     Text="{Binding Path=Isbn, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                                     Height="25" />
+                            <ContentPresenter Content="{Binding ElementName=Isbn, Path=(Validation.Errors).CurrentItem}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1">
+                            <Image x:Name="Cover"
+                                   Source="{Binding Path=Cover, UpdateSourceTrigger=PropertyChanged}" 
+                                   Margin="5, 10" 
+                                   MaxHeight="250"/>
+                            <Button Margin="5"
+                                    Command="{Binding Path=UploadCover}"
+                                    Content="Загрузить обложку"/>
+                            <Button Content="Удалить обложку"
+                                    Margin="5"
+                                    Command="{Binding Path=DeleteCover}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <TextBlock Text="Краткое описание" />
+                    <TextBox x:Name="Description"
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"
+                             VerticalScrollBarVisibility="Auto"
+                             Margin="10"
+                             MaxWidth="1500"
+                             Text="{Binding Path=Description, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" 
+                             Height="75" />
+                    <Button x:Name="SaveBook" 
+                            Height="35"
+                            Command="{Binding Path=SaveBook}" 
+                            Content="Сохранить"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

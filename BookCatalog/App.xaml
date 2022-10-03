@@ -1,0 +1,34 @@
+﻿<Application x:Class="BookCatalog.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:BookCatalog.ViewModel"
+             xmlns:vw="clr-namespace:BookCatalog.View">
+    <Application.Resources>
+         <ResourceDictionary>
+             <DataTemplate DataType="{x:Type vm:AllBooksViewModel}">
+                 <vw:AllBooksView/>
+            </DataTemplate>
+             <DataTemplate DataType="{x:Type vm:AllAuthorsViewModel}">
+                 <vw:AllAuthorsView/>
+             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:LoadingViewModel}">
+                 <vw:LoadingView/>
+            </DataTemplate>
+             <DataTemplate DataType="{x:Type vm:BookSuccessfullAddingVM}">
+                 <vw:BookSuccessfullAdding/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:AuthorSuccessfullAddingVM}">
+                 <vw:AuthorSuccessfullAdding/>
+             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:ErrorReportingViewModel}">
+                 <vw:ErrorReportingView/>
+            </DataTemplate>
+             <DataTemplate DataType="{x:Type vm:BookViewModel}">
+                 <vw:BookView/>
+            </DataTemplate>
+             <DataTemplate DataType="{x:Type vm:AuthorViewModel}">
+                 <vw:AuthorView/>
+             </DataTemplate>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

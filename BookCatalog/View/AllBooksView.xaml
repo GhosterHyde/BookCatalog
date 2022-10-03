@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="BookCatalog.View.AllBooksView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BookCatalog.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <DataGrid
+        ItemsSource="{Binding Path=AllBooks}"
+        x:Name="BooksDataGrid"
+        AutoGenerateColumns="False"
+        IsReadOnly="True"
+        SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn 
+                    Header="Название"
+                    Binding="{Binding Path=Name}"/>
+                <DataGridTextColumn
+                    Header="Автор" 
+                    Binding="{Binding Path=FirstAuthor}"/>
+                <DataGridTextColumn 
+                    Header="Год издания" 
+                    Binding="{Binding Path=Year}"/>
+                <DataGridTextColumn 
+                    Header="ISBN" 
+                    Binding="{Binding Path=Isbn}"/>
+                <DataGridTextColumn 
+                    Header="Краткое описание" 
+                    Binding="{Binding Path=Description}"
+                    MaxWidth="1500"/>
+                <DataGridTemplateColumn Header="Обложка">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Path=Cover}" MaxHeight="150"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Command="{Binding DataContext.UpdateBook, ElementName=BooksDataGrid}"
+                                    CommandParameter="{Binding SelectedItem, ElementName=BooksDataGrid}"
+                                    Background="Gold"
+                                    Foreground="White"
+                                    Width="60"
+                                    Height="25">Изменить</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Command="{Binding DataContext.DeleteBook, ElementName=BooksDataGrid}"
+                                    CommandParameter="{Binding SelectedItem, ElementName=BooksDataGrid}"
+                                    Background="Red"
+                                    Foreground="White"
+                                    Width="60"
+                                    Height="25">Удалить</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </ScrollViewer>
+</UserControl>
